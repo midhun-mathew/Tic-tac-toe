@@ -2,70 +2,40 @@
 #include<time.h>
 #include"conio.h"
 #include<stdlib.h>
+
+int count=0;
+void result(char res);
 void test(char a[3][3])
 {
-	if( (a[0][0]==a[0][1])&&(a[0][0]==a[0][2])&&(a[0][0]!='.') )
-	{
-			printf("%c wins\n",a[0][0]);
-			getch();
-			exit(0);
-	}
-	if( ((a[1][0]==a[1][1])&&(a[1][0]==a[1][2]))&&(a[1][0]!='.') )
-	{
-			printf("%c wins\n",a[1][0]);
-			getch();
-			exit(0);
-	}
+	if( (a[0][0]==a[0][1])&&(a[0][0]==a[0][2])&&(a[0][0]!='.') )       
+	        result(a[0][0]);
+	if( ((a[1][0]==a[1][1])&&(a[1][0]==a[1][2]))&&(a[1][0]!='.') )   
+	        result(a[1][0]);
 	if( ((a[2][0]==a[2][1])&&(a[2][0]==a[2][2]))&&(a[2][0]!='.') )
-	{
-			printf("%c wins\n",a[2][0]);
-			getch();
-			exit(0);
-	}
-	if( ((a[0][0]==a[1][0])&&(a[0][0]==a[2][0]))&&(a[0][0]!='.') )
-	{
-			printf("%c wins\n",a[0][0]);
-			getch();
-			exit(0);
-	}
+	        result(a[2][0]);
+	if( ((a[0][0]==a[1][0])&&(a[0][0]==a[2][0]))&&(a[0][0]!='.') )       
+	        result(a[0][0]);
 	if( ((a[0][1]==a[1][1])&&(a[0][1]==a[2][1]))&&(a[0][1]!='.') )
-	{
-			printf("%c wins\n",a[0][1]);
-			getch();
-			exit(0);
-	}
+	        result(a[0][1]);
 	if( ((a[0][2]==a[1][2])&&(a[0][2]==a[2][2]))&&(a[0][2]!='.') )
-	{
-			printf("%c wins\n",a[0][2]);
-			getch();
-			exit(0);
-	}
+	        result(a[0][2]);
 	if( ((a[0][0]==a[1][1])&&(a[0][0]==a[2][2]))&&(a[0][0]!='.') )
-	{
-			printf("%c wins\n",a[0][0]);
-			getch();
-			exit(0);
-	}
+	        result(a[0][0]);
 	if( ((a[0][2]==a[1][1])&&(a[0][2]==a[2][0]))&&(a[0][2]!='.') )
-	{
-			printf("%c wins\n",a[0][2]);
-			getch();
-			exit(0);
-	}
+	        result(a[0][2]);
 }
-
-
-
-
-
-
-
-
-
-void output(char a[3][3]) //used to display the matrix each time
+void result(char res)
+{
+    if(res=='x')
+        printf("computer wins\n");
+    else
+        printf("you win\n");
+	getch();
+	exit(0);
+}
+void output(char a[3][3]) //Displays the matrix each time
 {
 	int i,j;
-	//clrscr();
 	system("clear");
 	for(i=0;i<3;i++)
 	{
@@ -75,109 +45,171 @@ void output(char a[3][3]) //used to display the matrix each time
 	}
 	printf("\n");
 	test(a);    //tests if there are 3 consicutive x or y
-
-}
-void user_choice(char a[3][3])
-{
-	int i,j;
-	printf("enter position of y");
-	scanf("%d",&i);
-	switch(i)
+    if(count==9)//all slots are entered
 	{
-		case 1: i=0;j=0;break;
-		case 2: i=0;j=1;break;
-		case 3: i=0;j=2;break;
-		case 4: i=1;j=0;break;
-		case 5: i=1;j=1;break;
-		case 6: i=1;j=2;break;
-		case 7: i=2;j=0;break;
-		case 8: i=2;j=1;break;
-		case 9: i=2;j=2;break;
-	}
-	if(a[i][j]=='.')
+	    printf("the match is a draw\n");
+	    getch();
+	    exit(0);
+    }
+}
+int user_choice(char a[3][3])
+{
+	int i,j,y;
+	printf("enter position of y");
+	scanf("%d",&y);
+    j=(y-1)%3;//converts position(0-9) to array index(00-22)
+    i=(y-1)/3;//---
+	if(a[i][j]=='.')//checks if position is not used previously
 	{
 		a[i][j]='y';
+		count++;
 		output(a);
 	}
 	else
 	{
-		printf("enter proper output\n");
+		printf("enter proper input\n");
 		user_choice(a);
 	}
+	return y;
 }
 void comp_choice(char a[3][3])
 {
 	int i,j;
-	
+	long t;
 	if( (a[0][0]==a[0][1])&&(a[0][0]!='.')&&(a[0][2]=='.') ){i=0;j=2;}
-	else if( (a[0][1]==a[0][2])&&(a[0][1]!='.')&&(a[0][0]=='.') ){i=0;j=0;}
-	else if( (a[1][0]==a[1][1])&&(a[1][0]!='.')&&(a[1][2]=='.') ){i=1;j=2;}
-	else if( (a[1][1]==a[1][2])&&(a[1][1]!='.')&&(a[1][0]=='.') ){i=1;j=0;}
-	else if( (a[2][0]==a[2][1])&&(a[2][0]!='.')&&(a[2][2]=='.') ){i=2;j=2;}
-	else if( (a[2][1]==a[2][2])&&(a[2][1]!='.')&&(a[2][0]=='.') ){i=2;j=0;}
-	else if( (a[0][0]==a[1][0])&&(a[0][0]!='.')&&(a[2][0]=='.') ){i=2;j=0;}
-	else if( (a[0][1]==a[1][1])&&(a[0][1]!='.')&&(a[2][1]=='.') ){i=2;j=1;}
-	else if( (a[0][2]==a[1][2])&&(a[0][2]!='.')&&(a[2][2]=='.') ){i=2;j=2;}
-	else if( (a[1][0]==a[2][0])&&(a[1][0]!='.')&&(a[0][0]=='.') ){i=0;j=0;}
-	else if( (a[1][1]==a[2][1])&&(a[1][1]!='.')&&(a[0][1]=='.') ){i=0;j=1;}
-	else if( (a[1][2]==a[2][2])&&(a[1][2]!='.')&&(a[0][2]=='.') ){i=0;j=2;}
-	else if( (a[0][0]==a[1][1])&&(a[0][0]!='.')&&(a[2][2]=='.') ){i=2;j=2;}
-	else if( (a[0][2]==a[1][1])&&(a[0][2]!='.')&&(a[2][0]=='.') ){i=2;j=0;}
-	else if( (a[2][0]==a[1][1])&&(a[2][0]!='.')&&(a[0][2]=='.') ){i=0;j=2;}
-	else if( (a[2][2]==a[1][1])&&(a[2][2]!='.')&&(a[0][0]=='.') ){i=0;j=0;}
+	else if( (a[0][1]==a[0][2])&&(a[0][1]=='x')&&(a[0][0]=='.') ){i=0;j=0;}
+	else if( (a[1][0]==a[1][1])&&(a[1][0]=='x')&&(a[1][2]=='.') ){i=1;j=2;}
+	else if( (a[1][1]==a[1][2])&&(a[1][1]=='x')&&(a[1][0]=='.') ){i=1;j=0;}
+	else if( (a[2][0]==a[2][1])&&(a[2][0]=='x')&&(a[2][2]=='.') ){i=2;j=2;}
+	else if( (a[2][1]==a[2][2])&&(a[2][1]=='x')&&(a[2][0]=='.') ){i=2;j=0;}
+	else if( (a[0][0]==a[1][0])&&(a[0][0]=='x')&&(a[2][0]=='.') ){i=2;j=0;}
+	else if( (a[0][1]==a[1][1])&&(a[0][1]=='x')&&(a[2][1]=='.') ){i=2;j=1;}
+	else if( (a[0][2]==a[1][2])&&(a[0][2]=='x')&&(a[2][2]=='.') ){i=2;j=2;}
+	else if( (a[1][0]==a[2][0])&&(a[1][0]=='x')&&(a[0][0]=='.') ){i=0;j=0;}
+	else if( (a[1][1]==a[2][1])&&(a[1][1]=='x')&&(a[0][1]=='.') ){i=0;j=1;}
+	else if( (a[1][2]==a[2][2])&&(a[1][2]=='x')&&(a[0][2]=='.') ){i=0;j=2;}
+	else if( (a[0][0]==a[1][1])&&(a[0][0]=='x')&&(a[2][2]=='.') ){i=2;j=2;}
+	else if( (a[0][2]==a[1][1])&&(a[0][2]=='x')&&(a[2][0]=='.') ){i=2;j=0;}
+	else if( (a[2][0]==a[1][1])&&(a[2][0]=='x')&&(a[0][2]=='.') ){i=0;j=2;}
+	else if( (a[2][2]==a[1][1])&&(a[2][2]=='x')&&(a[0][0]=='.') ){i=0;j=0;}
 
-	else if( (a[0][0]==a[0][2])&&(a[0][0]!='.')&&(a[0][1]=='.') ){i=0;j=1;}
-	else if( (a[1][0]==a[1][2])&&(a[1][0]!='.')&&(a[1][1]=='.') ){i=1;j=1;}
-	else if( (a[2][0]==a[2][2])&&(a[2][0]!='.')&&(a[2][1]=='.') ){i=2;j=1;}
-	else if( (a[0][0]==a[2][0])&&(a[0][0]!='.')&&(a[1][0]=='.') ){i=1;j=0;}
-	else if( (a[0][1]==a[2][1])&&(a[0][1]!='.')&&(a[1][1]=='.') ){i=1;j=1;}
-	else if( (a[0][2]==a[2][2])&&(a[0][2]!='.')&&(a[1][2]=='.') ){i=1;j=2;}
-	else if( (a[0][0]==a[2][2])&&(a[0][0]!='.')&&(a[1][1]=='.') ){i=1;j=1;}
-	else if( (a[0][2]==a[2][0])&&(a[0][2]!='.')&&(a[1][1]=='.') ){i=1;j=1;}
-	else
-	{
-		  srand(time(NULL));
-		i=(rand()%9+1);
+	else if( (a[0][0]==a[0][2])&&(a[0][0]=='x')&&(a[0][1]=='.') ){i=0;j=1;}
+	else if( (a[1][0]==a[1][2])&&(a[1][0]=='x')&&(a[1][1]=='.') ){i=1;j=1;}
+	else if( (a[2][0]==a[2][2])&&(a[2][0]=='x')&&(a[2][1]=='.') ){i=2;j=1;}
+	else if( (a[0][0]==a[2][0])&&(a[0][0]=='x')&&(a[1][0]=='.') ){i=1;j=0;}
+	else if( (a[0][1]==a[2][1])&&(a[0][1]=='x')&&(a[1][1]=='.') ){i=1;j=1;}
+	else if( (a[0][2]==a[2][2])&&(a[0][2]=='x')&&(a[1][2]=='.') ){i=1;j=2;}
+	else if( (a[0][0]==a[2][2])&&(a[0][0]=='x')&&(a[1][1]=='.') ){i=1;j=1;}
+	else if( (a[0][2]==a[2][0])&&(a[0][2]=='x')&&(a[1][1]=='.') ){i=1;j=1;}
+	
 
-		switch(i)
-		{
-			case 1: i=0;j=0;break;
-			case 2: i=0;j=1;break;
-			case 3: i=0;j=2;break;
-			case 4: i=1;j=0;break;
-			case 5: i=1;j=1;break;
-			case 6: i=1;j=2;break;
-			case 7: i=2;j=0;break;
-			case 8: i=2;j=1;break;
-			case 9: i=2;j=2;break;
-		}
-	}
-	if(a[i][j]=='.')
-	{
-		a[i][j]='x';
-		output(a);
-	}
+	else if( (a[0][0]==a[0][1])&&(a[0][0]=='y')&&(a[0][2]=='.') ){i=0;j=2;}
+	else if( (a[0][1]==a[0][2])&&(a[0][1]=='y')&&(a[0][0]=='.') ){i=0;j=0;}
+	else if( (a[1][0]==a[1][1])&&(a[1][0]=='y')&&(a[1][2]=='.') ){i=1;j=2;}
+	else if( (a[1][1]==a[1][2])&&(a[1][1]=='y')&&(a[1][0]=='.') ){i=1;j=0;}
+	else if( (a[2][0]==a[2][1])&&(a[2][0]=='y')&&(a[2][2]=='.') ){i=2;j=2;}
+	else if( (a[2][1]==a[2][2])&&(a[2][1]=='y')&&(a[2][0]=='.') ){i=2;j=0;}
+	else if( (a[0][0]==a[1][0])&&(a[0][0]=='y')&&(a[2][0]=='.') ){i=2;j=0;}
+	else if( (a[0][1]==a[1][1])&&(a[0][1]=='y')&&(a[2][1]=='.') ){i=2;j=1;}
+	else if( (a[0][2]==a[1][2])&&(a[0][2]=='y')&&(a[2][2]=='.') ){i=2;j=2;}
+	else if( (a[1][0]==a[2][0])&&(a[1][0]=='y')&&(a[0][0]=='.') ){i=0;j=0;}
+	else if( (a[1][1]==a[2][1])&&(a[1][1]=='y')&&(a[0][1]=='.') ){i=0;j=1;}
+	else if( (a[1][2]==a[2][2])&&(a[1][2]=='y')&&(a[0][2]=='.') ){i=0;j=2;}
+	else if( (a[0][0]==a[1][1])&&(a[0][0]=='y')&&(a[2][2]=='.') ){i=2;j=2;}
+	else if( (a[0][2]==a[1][1])&&(a[0][2]=='y')&&(a[2][0]=='.') ){i=2;j=0;}
+	else if( (a[2][0]==a[1][1])&&(a[2][0]=='y')&&(a[0][2]=='.') ){i=0;j=2;}
+	else if( (a[2][2]==a[1][1])&&(a[2][2]=='y')&&(a[0][0]=='.') ){i=0;j=0;}
+
+	else if( (a[0][0]==a[0][2])&&(a[0][0]=='y')&&(a[0][1]=='.') ){i=0;j=1;}
+	else if( (a[1][0]==a[1][2])&&(a[1][0]=='y')&&(a[1][1]=='.') ){i=1;j=1;}
+	else if( (a[2][0]==a[2][2])&&(a[2][0]=='y')&&(a[2][1]=='.') ){i=2;j=1;}
+	else if( (a[0][0]==a[2][0])&&(a[0][0]=='y')&&(a[1][0]=='.') ){i=1;j=0;}
+	else if( (a[0][1]==a[2][1])&&(a[0][1]=='y')&&(a[1][1]=='.') ){i=1;j=1;}
+	else if( (a[0][2]==a[2][2])&&(a[0][2]=='y')&&(a[1][2]=='.') ){i=1;j=2;}
+	else if( (a[0][0]==a[2][2])&&(a[0][0]=='y')&&(a[1][1]=='.') ){i=1;j=1;}
+	else if( (a[0][2]==a[2][0])&&(a[0][2]=='y')&&(a[1][1]=='.') ){i=1;j=1;}
+	
+	
 	else
-	{
-		comp_choice(a);
+	{   
+	    while(1)
+	    {
+		    srand(time(NULL));
+		    t=(rand()%9+1);
+            j=(t-1)%3;
+            i=(t-1)/3;
+		    if(a[i][j]=='.')
+		        break;
+        }
 	}
+	a[i][j]='x';
+    count++;
+	output(a);
 }
+void playerFirst(char a[3][3])
+{
+    int y,r,i;
+    y=user_choice(a);
+    if(y==5)
+    {
+        srand(time(NULL));
+        r=rand()%4;
+        a[(r/2)*2][(r%2)*2]='x';//selects one of 4 corners
+        count++;
+        output(a);
+        
+        
+    }
+    else
+    {
+        a[1][1]='x';
+        count++;
+        output(a);
+        
+        y=user_choice(a);
+        printf("break\n");
+        getch();
+        if((a[0][0]=='y'&&a[2][2]=='y')||(a[0][2]=='y'&&a[2][0]=='y'))
+        {
+            srand(time(NULL));
+            r=rand()%4;printf("random=%d\n",r);
+            a[(r*2+1)/3][(r*2+1)%3]='x';
+            count++;
+            output(a);
+        }    
+        else
+            comp_choice(a);
+    }
+    printf("break2");
+    for(i=count/2;i<4;i++)
+    {   
+        user_choice(a);
+        comp_choice(a);
+    }
+    user_choice(a);
+}
+
 int main()
 {
 	char a[3][3];
-	int i,j;
-	//clrscr();
+	int i,j,fstPlr=0;
 	system("clear");
 	for(i=0;i<3;i++)
 		for(j=0;j<3;j++)
 			a[i][j]='.';
 	output(a);
-
-	for(i=0;i<4;i++)
-	{
-		comp_choice(a);
-		user_choice(a);
+    printf("enter 0 to play 1st,1 to play 2nd\n");
+    scanf("%d",&fstPlr);
+    if(fstPlr==1)
+    {
+	    for(i=0;i<4;i++)
+	    {
+		    comp_choice(a);
+		    user_choice(a);
+	    }
+	    comp_choice(a);
+	    getch();
 	}
-	comp_choice(a);
-	//getch();
+	else
+	    playerFirst(a);
 }
