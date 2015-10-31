@@ -1,215 +1,171 @@
+Bansari
+Today
+Youcreated an item in
+6:24 PM
+Google Drive Folder
+My Drive
+Created items:
+C++
+tictactoe.cpp
+No recorded activity before October 31, 2015
+
 #include<stdio.h>
 #include<time.h>
 #include"conio.h"
 #include<stdlib.h>
 
 int count=0;
-void result(char res);
-void test(char a[3][3])
-{
-	if( (a[0][0]==a[0][1])&&(a[0][0]==a[0][2])&&(a[0][0]!='.') )       
-	        result(a[0][0]);
-	if( ((a[1][0]==a[1][1])&&(a[1][0]==a[1][2]))&&(a[1][0]!='.') )   
-	        result(a[1][0]);
-	if( ((a[2][0]==a[2][1])&&(a[2][0]==a[2][2]))&&(a[2][0]!='.') )
-	        result(a[2][0]);
-	if( ((a[0][0]==a[1][0])&&(a[0][0]==a[2][0]))&&(a[0][0]!='.') )       
-	        result(a[0][0]);
-	if( ((a[0][1]==a[1][1])&&(a[0][1]==a[2][1]))&&(a[0][1]!='.') )
-	        result(a[0][1]);
-	if( ((a[0][2]==a[1][2])&&(a[0][2]==a[2][2]))&&(a[0][2]!='.') )
-	        result(a[0][2]);
-	if( ((a[0][0]==a[1][1])&&(a[0][0]==a[2][2]))&&(a[0][0]!='.') )
-	        result(a[0][0]);
-	if( ((a[0][2]==a[1][1])&&(a[0][2]==a[2][0]))&&(a[0][2]!='.') )
-	        result(a[0][2]);
+bool result(char res);
+bool test_game(char board[3][3]){
+  if( (board[0][0]==board[0][1])&&(board[0][0]==board[0][2])&&(board[0][0]!='.') )       
+    return result(board[0][0]);
+  if( ((board[1][0]==board[1][1])&&(board[1][0]==board[1][2]))&&(board[1][0]!='.') )   
+    return result(board[1][0]);
+  if( ((board[2][0]==board[2][1])&&(board[2][0]==board[2][2]))&&(board[2][0]!='.') )
+    return result(board[2][0]);
+  if( ((board[0][0]==board[1][0])&&(board[0][0]==board[2][0]))&&(board[0][0]!='.') )       
+    return result(board[0][0]);
+  if( ((board[0][1]==board[1][1])&&(board[0][1]==board[2][1]))&&(board[0][1]!='.') )
+    return result(board[0][1]);
+  if( ((board[0][2]==board[1][2])&&(board[0][2]==board[2][2]))&&(board[0][2]!='.') )
+    return result(board[0][2]);
+  if( ((board[0][0]==board[1][1])&&(board[0][0]==board[2][2]))&&(board[0][0]!='.') )
+    return result(board[0][0]);
+  if( ((board[0][2]==board[1][1])&&(board[0][2]==board[2][0]))&&(board[0][2]!='.') )
+    return result(board[0][2]);
+  return false;
 }
-void result(char res)
-{
-    if(res=='x')
-        printf("computer wins\n");
-    else
-        printf("you win\n");
-	getch();
-	exit(0);
-}
-void output(char a[3][3]) //Displays the matrix each time
-{
-	int i,j;
-	system("clear");
-	for(i=0;i<3;i++)
-	{
-		for(j=0;j<3;j++)
-			printf("%c\t",a[i][j]);
-		printf("\n");
-	}
-	printf("\n");
-	test(a);    //tests if there are 3 consicutive x or y
-    if(count==9)//all slots are entered
-	{
-	    printf("the match is a draw\n");
-	    getch();
-	    exit(0);
-    }
-}
-int user_choice(char a[3][3])
-{
-	int i,j,y;
-	printf("enter position of y");
-	scanf("%d",&y);
-    j=(y-1)%3;//converts position(0-9) to array index(00-22)
-    i=(y-1)/3;//---
-	if(a[i][j]=='.')//checks if position is not used previously
-	{
-		a[i][j]='y';
-		count++;
-		output(a);
-	}
-	else
-	{
-		printf("enter proper input\n");
-		user_choice(a);
-	}
-	return y;
-}
-void comp_choice(char a[3][3])
-{
-	int i,j;
-	long t;
-	if( (a[0][0]==a[0][1])&&(a[0][0]!='.')&&(a[0][2]=='.') ){i=0;j=2;}
-	else if( (a[0][1]==a[0][2])&&(a[0][1]=='x')&&(a[0][0]=='.') ){i=0;j=0;}
-	else if( (a[1][0]==a[1][1])&&(a[1][0]=='x')&&(a[1][2]=='.') ){i=1;j=2;}
-	else if( (a[1][1]==a[1][2])&&(a[1][1]=='x')&&(a[1][0]=='.') ){i=1;j=0;}
-	else if( (a[2][0]==a[2][1])&&(a[2][0]=='x')&&(a[2][2]=='.') ){i=2;j=2;}
-	else if( (a[2][1]==a[2][2])&&(a[2][1]=='x')&&(a[2][0]=='.') ){i=2;j=0;}
-	else if( (a[0][0]==a[1][0])&&(a[0][0]=='x')&&(a[2][0]=='.') ){i=2;j=0;}
-	else if( (a[0][1]==a[1][1])&&(a[0][1]=='x')&&(a[2][1]=='.') ){i=2;j=1;}
-	else if( (a[0][2]==a[1][2])&&(a[0][2]=='x')&&(a[2][2]=='.') ){i=2;j=2;}
-	else if( (a[1][0]==a[2][0])&&(a[1][0]=='x')&&(a[0][0]=='.') ){i=0;j=0;}
-	else if( (a[1][1]==a[2][1])&&(a[1][1]=='x')&&(a[0][1]=='.') ){i=0;j=1;}
-	else if( (a[1][2]==a[2][2])&&(a[1][2]=='x')&&(a[0][2]=='.') ){i=0;j=2;}
-	else if( (a[0][0]==a[1][1])&&(a[0][0]=='x')&&(a[2][2]=='.') ){i=2;j=2;}
-	else if( (a[0][2]==a[1][1])&&(a[0][2]=='x')&&(a[2][0]=='.') ){i=2;j=0;}
-	else if( (a[2][0]==a[1][1])&&(a[2][0]=='x')&&(a[0][2]=='.') ){i=0;j=2;}
-	else if( (a[2][2]==a[1][1])&&(a[2][2]=='x')&&(a[0][0]=='.') ){i=0;j=0;}
 
-	else if( (a[0][0]==a[0][2])&&(a[0][0]=='x')&&(a[0][1]=='.') ){i=0;j=1;}
-	else if( (a[1][0]==a[1][2])&&(a[1][0]=='x')&&(a[1][1]=='.') ){i=1;j=1;}
-	else if( (a[2][0]==a[2][2])&&(a[2][0]=='x')&&(a[2][1]=='.') ){i=2;j=1;}
-	else if( (a[0][0]==a[2][0])&&(a[0][0]=='x')&&(a[1][0]=='.') ){i=1;j=0;}
-	else if( (a[0][1]==a[2][1])&&(a[0][1]=='x')&&(a[1][1]=='.') ){i=1;j=1;}
-	else if( (a[0][2]==a[2][2])&&(a[0][2]=='x')&&(a[1][2]=='.') ){i=1;j=2;}
-	else if( (a[0][0]==a[2][2])&&(a[0][0]=='x')&&(a[1][1]=='.') ){i=1;j=1;}
-	else if( (a[0][2]==a[2][0])&&(a[0][2]=='x')&&(a[1][1]=='.') ){i=1;j=1;}
+bool result(char res){
+  printf("%s",(res=='X')?"computer wins\n":"you win\n");
+  return true;
+}
+
+void set_board( char (&board)[3][3], int val ) {
+  int i=9;
+  while( i-- ) *(*(board)+i)=val;
+}
+
+void render_game( char board[3][3] ) {//Displays the matrix each time
+  int i=3,j=3;
+  //  system("clear");
+  for(i=0;i<3;i++) {
+    for(j=0;j<3;j++)
+      printf("%c\t",board[i][j]);
+    printf("\n");
+  }
+  printf("\n");
+}
+
+void user_choice(char (&board)[3][3], char symbol ) {
+  int row, column, move;
+  while(1){
+    printf("enter position of y::  ");
+    scanf("%d",&move);
+    row=(move-1)/3; //converts position(0-9) to array index(00-22)
+    column=(move-1)%3; //---
+    if( board[row][column]=='.' ) {//checks if position is not used previously
+      *(*(board+row)+column)=symbol;
+      break;
+    }
+    printf("enter proper input\n");
+  }
+}
+
+void comp_choice(char (&board)[3][3], char symbol ) {
+  int i,j;
+  long t;
+  char user_symbol=(symbol == 'X')? 'O':'X'; 
+  if( (board[0][0]==board[0][1])&&(board[0][0]!='.')&&(board[0][2]=='.') ){i=0;j=2;}
+  else if( (board[0][1]==board[0][2])&&(board[0][1]==symbol)&&(board[0][0]=='.') ){i=0;j=0;}
+  else if( (board[1][0]==board[1][1])&&(board[1][0]==symbol)&&(board[1][2]=='.') ){i=1;j=2;}
+  else if( (board[1][1]==board[1][2])&&(board[1][1]==symbol)&&(board[1][0]=='.') ){i=1;j=0;}
+  else if( (board[2][0]==board[2][1])&&(board[2][0]==symbol)&&(board[2][2]=='.') ){i=2;j=2;}
+  else if( (board[2][1]==board[2][2])&&(board[2][1]==symbol)&&(board[2][0]=='.') ){i=2;j=0;}
+  else if( (board[0][0]==board[1][0])&&(board[0][0]==symbol)&&(board[2][0]=='.') ){i=2;j=0;}
+  else if( (board[0][1]==board[1][1])&&(board[0][1]==symbol)&&(board[2][1]=='.') ){i=2;j=1;}
+  else if( (board[0][2]==board[1][2])&&(board[0][2]==symbol)&&(board[2][2]=='.') ){i=2;j=2;}
+  else if( (board[1][0]==board[2][0])&&(board[1][0]==symbol)&&(board[0][0]=='.') ){i=0;j=0;}
+  else if( (board[1][1]==board[2][1])&&(board[1][1]==symbol)&&(board[0][1]=='.') ){i=0;j=1;}
+  else if( (board[1][2]==board[2][2])&&(board[1][2]==symbol)&&(board[0][2]=='.') ){i=0;j=2;}
+  else if( (board[0][0]==board[1][1])&&(board[0][0]==symbol)&&(board[2][2]=='.') ){i=2;j=2;}
+  else if( (board[0][2]==board[1][1])&&(board[0][2]==symbol)&&(board[2][0]=='.') ){i=2;j=0;}
+  else if( (board[2][0]==board[1][1])&&(board[2][0]==symbol)&&(board[0][2]=='.') ){i=0;j=2;}
+  else if( (board[2][2]==board[1][1])&&(board[2][2]==symbol)&&(board[0][0]=='.') ){i=0;j=0;}
+
+  else if( (board[0][0]==board[0][2])&&(board[0][0]==symbol)&&(board[0][1]=='.') ){i=0;j=1;}
+  else if( (board[1][0]==board[1][2])&&(board[1][0]==symbol)&&(board[1][1]=='.') ){i=1;j=1;}
+  else if( (board[2][0]==board[2][2])&&(board[2][0]==symbol)&&(board[2][1]=='.') ){i=2;j=1;}
+  else if( (board[0][0]==board[2][0])&&(board[0][0]==symbol)&&(board[1][0]=='.') ){i=1;j=0;}
+  else if( (board[0][1]==board[2][1])&&(board[0][1]==symbol)&&(board[1][1]=='.') ){i=1;j=1;}
+  else if( (board[0][2]==board[2][2])&&(board[0][2]==symbol)&&(board[1][2]=='.') ){i=1;j=2;}
+  else if( (board[0][0]==board[2][2])&&(board[0][0]==symbol)&&(board[1][1]=='.') ){i=1;j=1;}
+  else if( (board[0][2]==board[2][0])&&(board[0][2]==symbol)&&(board[1][1]=='.') ){i=1;j=1;}
 	
 
-	else if( (a[0][0]==a[0][1])&&(a[0][0]=='y')&&(a[0][2]=='.') ){i=0;j=2;}
-	else if( (a[0][1]==a[0][2])&&(a[0][1]=='y')&&(a[0][0]=='.') ){i=0;j=0;}
-	else if( (a[1][0]==a[1][1])&&(a[1][0]=='y')&&(a[1][2]=='.') ){i=1;j=2;}
-	else if( (a[1][1]==a[1][2])&&(a[1][1]=='y')&&(a[1][0]=='.') ){i=1;j=0;}
-	else if( (a[2][0]==a[2][1])&&(a[2][0]=='y')&&(a[2][2]=='.') ){i=2;j=2;}
-	else if( (a[2][1]==a[2][2])&&(a[2][1]=='y')&&(a[2][0]=='.') ){i=2;j=0;}
-	else if( (a[0][0]==a[1][0])&&(a[0][0]=='y')&&(a[2][0]=='.') ){i=2;j=0;}
-	else if( (a[0][1]==a[1][1])&&(a[0][1]=='y')&&(a[2][1]=='.') ){i=2;j=1;}
-	else if( (a[0][2]==a[1][2])&&(a[0][2]=='y')&&(a[2][2]=='.') ){i=2;j=2;}
-	else if( (a[1][0]==a[2][0])&&(a[1][0]=='y')&&(a[0][0]=='.') ){i=0;j=0;}
-	else if( (a[1][1]==a[2][1])&&(a[1][1]=='y')&&(a[0][1]=='.') ){i=0;j=1;}
-	else if( (a[1][2]==a[2][2])&&(a[1][2]=='y')&&(a[0][2]=='.') ){i=0;j=2;}
-	else if( (a[0][0]==a[1][1])&&(a[0][0]=='y')&&(a[2][2]=='.') ){i=2;j=2;}
-	else if( (a[0][2]==a[1][1])&&(a[0][2]=='y')&&(a[2][0]=='.') ){i=2;j=0;}
-	else if( (a[2][0]==a[1][1])&&(a[2][0]=='y')&&(a[0][2]=='.') ){i=0;j=2;}
-	else if( (a[2][2]==a[1][1])&&(a[2][2]=='y')&&(a[0][0]=='.') ){i=0;j=0;}
+  else if( (board[0][0]==board[0][1])&&(board[0][0]==user_symbol)&&(board[0][2]=='.') ){i=0;j=2;}
+  else if( (board[0][1]==board[0][2])&&(board[0][1]==user_symbol)&&(board[0][0]=='.') ){i=0;j=0;}
+  else if( (board[1][0]==board[1][1])&&(board[1][0]==user_symbol)&&(board[1][2]=='.') ){i=1;j=2;}
+  else if( (board[1][1]==board[1][2])&&(board[1][1]==user_symbol)&&(board[1][0]=='.') ){i=1;j=0;}
+  else if( (board[2][0]==board[2][1])&&(board[2][0]==user_symbol)&&(board[2][2]=='.') ){i=2;j=2;}
+  else if( (board[2][1]==board[2][2])&&(board[2][1]==user_symbol)&&(board[2][0]=='.') ){i=2;j=0;}
+  else if( (board[0][0]==board[1][0])&&(board[0][0]==user_symbol)&&(board[2][0]=='.') ){i=2;j=0;}
+  else if( (board[0][1]==board[1][1])&&(board[0][1]==user_symbol)&&(board[2][1]=='.') ){i=2;j=1;}
+  else if( (board[0][2]==board[1][2])&&(board[0][2]==user_symbol)&&(board[2][2]=='.') ){i=2;j=2;}
+  else if( (board[1][0]==board[2][0])&&(board[1][0]==user_symbol)&&(board[0][0]=='.') ){i=0;j=0;}
+  else if( (board[1][1]==board[2][1])&&(board[1][1]==user_symbol)&&(board[0][1]=='.') ){i=0;j=1;}
+  else if( (board[1][2]==board[2][2])&&(board[1][2]==user_symbol)&&(board[0][2]=='.') ){i=0;j=2;}
+  else if( (board[0][0]==board[1][1])&&(board[0][0]==user_symbol)&&(board[2][2]=='.') ){i=2;j=2;}
+  else if( (board[0][2]==board[1][1])&&(board[0][2]==user_symbol)&&(board[2][0]=='.') ){i=2;j=0;}
+  else if( (board[2][0]==board[1][1])&&(board[2][0]==user_symbol)&&(board[0][2]=='.') ){i=0;j=2;}
+  else if( (board[2][2]==board[1][1])&&(board[2][2]==user_symbol)&&(board[0][0]=='.') ){i=0;j=0;}
 
-	else if( (a[0][0]==a[0][2])&&(a[0][0]=='y')&&(a[0][1]=='.') ){i=0;j=1;}
-	else if( (a[1][0]==a[1][2])&&(a[1][0]=='y')&&(a[1][1]=='.') ){i=1;j=1;}
-	else if( (a[2][0]==a[2][2])&&(a[2][0]=='y')&&(a[2][1]=='.') ){i=2;j=1;}
-	else if( (a[0][0]==a[2][0])&&(a[0][0]=='y')&&(a[1][0]=='.') ){i=1;j=0;}
-	else if( (a[0][1]==a[2][1])&&(a[0][1]=='y')&&(a[1][1]=='.') ){i=1;j=1;}
-	else if( (a[0][2]==a[2][2])&&(a[0][2]=='y')&&(a[1][2]=='.') ){i=1;j=2;}
-	else if( (a[0][0]==a[2][2])&&(a[0][0]=='y')&&(a[1][1]=='.') ){i=1;j=1;}
-	else if( (a[0][2]==a[2][0])&&(a[0][2]=='y')&&(a[1][1]=='.') ){i=1;j=1;}
+  else if( (board[0][0]==board[0][2])&&(board[0][0]==user_symbol)&&(board[0][1]=='.') ){i=0;j=1;}
+  else if( (board[1][0]==board[1][2])&&(board[1][0]==user_symbol)&&(board[1][1]=='.') ){i=1;j=1;}
+  else if( (board[2][0]==board[2][2])&&(board[2][0]==user_symbol)&&(board[2][1]=='.') ){i=2;j=1;}
+  else if( (board[0][0]==board[2][0])&&(board[0][0]==user_symbol)&&(board[1][0]=='.') ){i=1;j=0;}
+  else if( (board[0][1]==board[2][1])&&(board[0][1]==user_symbol)&&(board[1][1]=='.') ){i=1;j=1;}
+  else if( (board[0][2]==board[2][2])&&(board[0][2]==user_symbol)&&(board[1][2]=='.') ){i=1;j=2;}
+  else if( (board[0][0]==board[2][2])&&(board[0][0]==user_symbol)&&(board[1][1]=='.') ){i=1;j=1;}
+  else if( (board[0][2]==board[2][0])&&(board[0][2]==user_symbol)&&(board[1][1]=='.') ){i=1;j=1;}
 	
-	
-	else
-	{   
-	    while(1)
-	    {
-		    srand(time(NULL));
-		    t=(rand()%9+1);
-            j=(t-1)%3;
-            i=(t-1)/3;
-		    if(a[i][j]=='.')
-		        break;
-        }
-	}
-	a[i][j]='x';
-    count++;
-	output(a);
-}
-void playerFirst(char a[3][3])
-{
-    int y,r,i;
-    y=user_choice(a);
-    if(y==5)
-    {
-        srand(time(NULL));
-        r=rand()%4;
-        a[(r/2)*2][(r%2)*2]='x';//selects one of 4 corners
-        count++;
-        output(a);
-        
-        
+  else  {   
+    while(1) {
+      srand(time(NULL));
+      t=(rand()%9+1);
+      j=(t-1)%3;
+      i=(t-1)/3;
+      if(board[i][j]=='.')
+	break;
     }
-    else
-    {
-        a[1][1]='x';
-        count++;
-        output(a);
-        
-        y=user_choice(a);
-        printf("break\n");
-        getch();
-        if((a[0][0]=='y'&&a[2][2]=='y')||(a[0][2]=='y'&&a[2][0]=='y'))
-        {
-            srand(time(NULL));
-            r=rand()%4;printf("random=%d\n",r);
-            a[(r*2+1)/3][(r*2+1)%3]='x';
-            count++;
-            output(a);
-        }    
-        else
-            comp_choice(a);
-    }
-    printf("break2");
-    for(i=count/2;i<4;i++)
-    {   
-        user_choice(a);
-        comp_choice(a);
-    }
-    user_choice(a);
+  }
+  board[i][j]=symbol;
+  count++;
 }
 
-int main()
-{
-	char a[3][3];
-	int i,j,fstPlr=0;
-	system("clear");
-	for(i=0;i<3;i++)
-		for(j=0;j<3;j++)
-			a[i][j]='.';
-	output(a);
-    printf("enter 0 to play 1st,1 to play 2nd\n");
-    scanf("%d",&fstPlr);
-    if(fstPlr==1)
-    {
-	    for(i=0;i<4;i++)
-	    {
-		    comp_choice(a);
-		    user_choice(a);
-	    }
-	    comp_choice(a);
-	    getch();
-	}
-	else
-	    playerFirst(a);
+int main() {
+  char board[3][3];
+  int fstPlr;
+  void (*player_1)( char (&board)[3][3], char ) = &comp_choice;
+  void (*player_2)( char (&board)[3][3], char ) = &comp_choice;
+
+  set_board( board, '.' );
+  render_game( board );
+
+  printf("\nEnter 0 to play 1st,1 to play 2nd: ");
+  scanf("%d",&fstPlr);
+  if( fstPlr==1 )  player_2= user_choice;
+  else             player_1= user_choice;
+
+  while( 1 ) {
+    player_1( board, 'X' );
+    render_game( board );
+    if( test_game( board ) ) break;
+    player_2( board, 'O' );
+    render_game( board );
+    if( test_game( board ) ) break;
+  }
+  
+  printf("thanks for playing the game\n\n");
+  return 0;
 }
