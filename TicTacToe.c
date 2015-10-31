@@ -1,14 +1,3 @@
-Bansari
-Today
-Youcreated an item in
-6:24 PM
-Google Drive Folder
-My Drive
-Created items:
-C++
-tictactoe.cpp
-No recorded activity before October 31, 2015
-
 #include<stdio.h>
 #include<time.h>
 #include"conio.h"
